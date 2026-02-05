@@ -73,3 +73,6 @@ export class Employee extends Model<EmployeeAttributes, EmployeeCreationAttribut
     );
   }
 }
+
+
+export default Employee
