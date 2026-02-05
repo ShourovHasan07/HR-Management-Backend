@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                // modern JS support
+    "module": "CommonJS",              // Node.js default
+    "rootDir": "src",                  // সব ts কোড src ফোল্ডারে
+    "outDir": "dist",                  // compiled JS dist ফোল্ডারে যাবে
+    "strict": true,                    // strict type checking
+    "esModuleInterop": true,           // import express সহজ হয়
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "sourceMap": true
+  }
+}
