@@ -4,8 +4,11 @@ import sequelize from './config/db';
 import HRUser from './models/hr_user';
 import bcrypt from 'bcryptjs';
 import authRoutes from './routes/auth';
-import { Employee } from './models/employee';
+
 import employeeRoutes from './routes/employees';
+import attandenceRoutes from './routes/attendance.routes';
+import reportRoutes from './routes/report.routes';
+import { Employee } from './models/employee';
 
 
 dotenv.config();
@@ -25,7 +28,9 @@ sequelize.sync({ alter: true }).then(async () => {
 // Routes
 app.use('/auth', authRoutes);
 
-app.use('/employees', employeeRoutes);
+app.use('/api/employees', employeeRoutes);
+app.use('/api/attendance', attandenceRoutes);
+app.use('/api/atten-report', reportRoutes);
 
 
 

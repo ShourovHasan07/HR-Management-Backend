@@ -1,4 +1,5 @@
 import { Model, DataTypes, Sequelize, Optional } from 'sequelize';
+import sequelize from '../config/db';
 
 interface EmployeeAttributes {
   id: number;
@@ -9,15 +10,15 @@ interface EmployeeAttributes {
   date_of_birth: string;
   salary: number;
   photo_path?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 interface EmployeeCreationAttributes
-  extends Optional<EmployeeAttributes, 'id' | 'photo_path' | 'createdAt' | 'updatedAt'> {}
+  extends Optional<EmployeeAttributes, 'id' | 'photo_path'> {}
 
-export class Employee extends Model<EmployeeAttributes, EmployeeCreationAttributes>
+export class Employee
+  extends Model<EmployeeAttributes, EmployeeCreationAttributes>
   implements EmployeeAttributes {
+
   public id!: number;
   public name!: string;
   public age!: number;
@@ -26,8 +27,6 @@ export class Employee extends Model<EmployeeAttributes, EmployeeCreationAttribut
   public date_of_birth!: string;
   public salary!: number;
   public photo_path?: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 
   static initModel(sequelize: Sequelize) {
     Employee.init(
@@ -37,30 +36,37 @@ export class Employee extends Model<EmployeeAttributes, EmployeeCreationAttribut
           autoIncrement: true,
           primaryKey: true,
         },
+
         name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
+
         age: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
+
         designation: {
           type: DataTypes.STRING,
           allowNull: false,
         },
+
         hiring_date: {
           type: DataTypes.DATEONLY,
           allowNull: false,
         },
+
         date_of_birth: {
           type: DataTypes.DATEONLY,
           allowNull: false,
         },
+
         salary: {
           type: DataTypes.DECIMAL(10, 2),
           allowNull: false,
         },
+
         photo_path: {
           type: DataTypes.STRING,
           allowNull: true,
@@ -69,10 +75,18 @@ export class Employee extends Model<EmployeeAttributes, EmployeeCreationAttribut
       {
         sequelize,
         tableName: 'employees',
+
+        // COMPOSITE UNIQUE 
+        indexes: [
+          {
+            unique: true,
+            fields: ['name', 'designation'],
+          },
+        ],
       }
     );
   }
 }
 
-
-export default Employee
+Employee.initModel(sequelize);
+export default Employee;
