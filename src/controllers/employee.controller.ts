@@ -3,7 +3,7 @@ import Employee from '../models/employee';
 import moment from 'moment';
 import { Op } from 'sequelize';
 
-/* ================= CREATE ================= */
+//create
 export const createEmployee = async (req: Request, res: Response) => {
   try {
     const { name, age, designation, hiring_date, date_of_birth, salary } =
@@ -108,7 +108,7 @@ export const getAllEmployees = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= GET BY ID ================= */
+//get by id 
 export const getEmployeeById = async (req: Request, res: Response) => {
   try {
     const employee = await Employee.findByPk(req.params.id);
@@ -122,7 +122,7 @@ export const getEmployeeById = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= UPDATE ================= */
+//update
 export const updateEmployee = async (req: Request, res: Response) => {
   try {
     const employee = await Employee.findByPk(req.params.id);
@@ -175,7 +175,7 @@ export const updateEmployee = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= DELETE ================= */
+// delete 
 export const deleteEmployee = async (req: Request, res: Response) => {
   try {
     const employee = await Employee.findByPk(req.params.id);

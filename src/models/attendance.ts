@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/db';
+import Employee from './employee'; // 👈 import Employee
 
 class Attendance extends Model {
   public id!: number;
@@ -36,5 +37,11 @@ Attendance.init(
     tableName: 'attendances',
   }
 );
+
+// ASSOCIATION 
+Attendance.belongsTo(Employee, {
+  foreignKey: 'employee_id',
+  as: 'employee',
+});
 
 export default Attendance;

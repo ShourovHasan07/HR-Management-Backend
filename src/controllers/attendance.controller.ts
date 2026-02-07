@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import Attendance from '../models/attendance';
 import Employee from '../models/employee';
+import { createEmployee } from './employee.controller';
 
-/* ================= GET LIST ================= */
+// Get List 
 export const getAttendances = async (req: Request, res: Response) => {
   try {
     const { employee_id, date, startDate, endDate } = req.query;
@@ -31,7 +32,9 @@ export const getAttendances = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= GET BY ID ================= */
+
+
+// get details by id 
 export const getAttendanceById = async (req: Request, res: Response) => {
   try {
     const attendance = await Attendance.findByPk(req.params.id);
@@ -45,7 +48,7 @@ export const getAttendanceById = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= CREATE OR UPSERT ================= */
+
 export const createOrUpdateAttendance = async (
   req: Request,
   res: Response,
@@ -59,7 +62,7 @@ export const createOrUpdateAttendance = async (
       });
     }
 
-    //  UPSERT LOGIC
+    //  UPSERT
     const [attendance, created] = await Attendance.findOrCreate({
       where: { employee_id, date },
       defaults: { check_in_time },
@@ -81,7 +84,7 @@ export const createOrUpdateAttendance = async (
   }
 };
 
-/* ================= UPDATE ================= */
+//update
 export const updateAttendance = async (req: Request, res: Response) => {
 
     //console.log(req.body)
@@ -105,7 +108,7 @@ export const updateAttendance = async (req: Request, res: Response) => {
   }
 };
 
-/* ================= DELETE ================= */
+//Delete
 export const deleteAttendance = async (req: Request, res: Response) => {
   try {
     const attendance = await Attendance.findByPk(req.params.id);

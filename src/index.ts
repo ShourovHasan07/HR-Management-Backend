@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import sequelize from './config/db';
 import HRUser from './models/hr_user';
 import bcrypt from 'bcryptjs';
-import authRoutes from './routes/auth';
+import authRoutes from './routes/auth.routes';
 
 import employeeRoutes from './routes/employees';
 import attandenceRoutes from './routes/attendance.routes';
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 sequelize.sync({ alter: true }).then(async () => {
   console.log('Database & tables synced');
 
-  // Create default HR user after table exists
+ 
   
 })
 

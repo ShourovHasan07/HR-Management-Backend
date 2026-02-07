@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 // CREATE
-router.post('/create', upload.single('photo'), createEmployee);
+router.post('/', upload.single('photo'), createEmployee);
 
 // READ
 router.get('/', getAllEmployees);

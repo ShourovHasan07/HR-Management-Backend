@@ -8,6 +8,8 @@ export const getAttendanceReport = async (req: Request, res: Response) => {
   try {
     const { month, employee_id } = req.query as any;
 
+    console
+
     //  Validate month
     if (!month || !moment(month, 'YYYY-MM', true).isValid()) {
       return res.status(400).json({ message: 'month query param is required in YYYY-MM format' });

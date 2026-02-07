@@ -9,7 +9,7 @@ interface EmployeeAttributes {
   hiring_date: string;
   date_of_birth: string;
   salary: number;
-  photo_path?: string;
+  photo_path?: string | null;
 }
 
 interface EmployeeCreationAttributes
@@ -26,9 +26,14 @@ export class Employee
   public hiring_date!: string;
   public date_of_birth!: string;
   public salary!: number;
-  public photo_path?: string;
+  public photo_path?: string | null;
 
-  static initModel(sequelize: Sequelize) {
+  // timestamps
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  // Model initialization
+  public static initModel(sequelize: Sequelize) {
     Employee.init(
       {
         id: {
@@ -36,37 +41,30 @@ export class Employee
           autoIncrement: true,
           primaryKey: true,
         },
-
         name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-
         age: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-
         designation: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-
         hiring_date: {
           type: DataTypes.DATEONLY,
           allowNull: false,
         },
-
         date_of_birth: {
           type: DataTypes.DATEONLY,
           allowNull: false,
         },
-
         salary: {
           type: DataTypes.DECIMAL(10, 2),
           allowNull: false,
         },
-
         photo_path: {
           type: DataTypes.STRING,
           allowNull: true,
@@ -75,18 +73,26 @@ export class Employee
       {
         sequelize,
         tableName: 'employees',
-
-        // COMPOSITE UNIQUE 
         indexes: [
           {
             unique: true,
-            fields: ['name', 'designation'],
+            fields: ['name', 'designation'], // composite unique
           },
         ],
       }
     );
   }
+
+  // Associations
+  public static associate(models: any) {
+    Employee.hasMany(models.Attendance, {
+      foreignKey: 'employee_id',
+      as: 'attendances',
+    });
+  }
 }
 
+// Initialize model
 Employee.initModel(sequelize);
+
 export default Employee;
